@@ -346,9 +346,9 @@ footer .footer_discl {
 }
 
 .match_filters {
-     display: flex;
-     border-bottom: 1px solid #01285e;
-     background: #dff1ff;
+    display: flex;
+    border-bottom: 1px solid #01285e;
+    background: #dff1ff;
 }
 .match_filters .tag {
     font-weight: 300;
@@ -454,7 +454,7 @@ footer .footer_discl {
 
 
 /*=============================
-         PROMOTION
+    PROMOTION
 ===============================*/
 
 .promotion_wrapper {
@@ -477,7 +477,7 @@ footer .footer_discl {
 }
 .promotion_wrapper .promotion_animation .left span {
     display:block;
- }
+}
 
 .promotion_wrapper .promotion_animation .right {
     line-height: 135px;
@@ -514,7 +514,7 @@ footer .footer_discl {
 }
 
 /*=============================
-         THE MATCHES
+    THE MATCHES
 ===============================*/
 
 .the_matches_container {
@@ -530,7 +530,7 @@ footer .footer_discl {
 }
 
 .the_matches_wrapper .right {
-   width:400px;
+    width:400px;
 }
 
 .league_table_wrapper {
@@ -553,7 +553,7 @@ footer .footer_discl {
 
 
 /*=============================
-         ADMIN
+    ADMIN
 ===============================*/
 
 .admin_container {
@@ -598,7 +598,7 @@ footer .footer_discl {
     width: 480px;
 }
 
- 
+
 .select_team_layout .wrapper{
     display: flex;
 }
@@ -622,7 +622,7 @@ footer .footer_discl {
 }
 
 /*=============================
-         THE TEAM
+    THE TEAM
 ===============================*/
 
 .the_team_container {
