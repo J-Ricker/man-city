@@ -3,6 +3,7 @@ import Layout from './HOC/layout';
 import {Switch, Route} from 'react-router-dom';
 
 import PrivateRoutes from './components/authRoutes/privateRoutes';
+import PublicRoutes from './components/authRoutes/publicRoutes';
 
 import Home from './components/home';
 import SignIn from './components/signIn';
