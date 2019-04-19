@@ -22,6 +22,12 @@ const FormField = ({formData, id, change}) => {
             case ('input'):
                     formTemplate = (
                         <div>
+                            {formData.showlabel ? 
+                                <div className="label_inputs">
+                                    {formData.config.label}
+                                </div>
+                                : null
+                            }
                             <input 
                                 {...formData.config}
                                 value={
@@ -33,6 +39,33 @@ const FormField = ({formData, id, change}) => {
                         </div>
                     )
                 break;
+            case('select'):
+                    formTemplate = (
+                        <div>
+                            {formData.showlabel ? 
+                                <div className="label_inputs">
+                                    {formData.config.label}
+                                </div>
+                                : null
+                            }
+                            <select
+                                value={
+                                    formData.value
+                                }
+                                onChange={(e) => change({e, id})}
+                            >
+                                <option value="">Select One</option>
+                                {
+                                    formData.config.options.map((item) => (
+                                        <option key={item.key} value={item.key}>
+                                            {item.value}
+                                        </option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                    )
+            break;
             default:
                 formTemplate = null;
         }
