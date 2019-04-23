@@ -242,6 +242,56 @@ class AddEditMatch extends Component {
         }
     }
 
+    successForm(message) {
+        this.setState({
+            formSuccess: message
+        });
+
+        setTimeout(() => {
+            this.setState({
+                formSuccess: ''
+            });
+        }, 2000)
+    }
+
+    submitForm(e){
+        e.preventDefault();
+
+        let dataToSubmit = {};
+        let formisValid = true;
+        
+        for (const key in this.state.formData) {
+            dataToSubmit[key] = this.state.formData[key].value;
+            formisValid = this.state.formData[key].valid && formisValid;
+        }
+
+        this.state.teams.forEach((team) => {
+            if(team.shortName === dataToSubmit.local) {
+                dataToSubmit['localThmb'] = team.thmb
+            }
+            if(team.shortName === dataToSubmit.away) {
+                dataToSubmit['awayThmb'] = team.thmb
+            }
+        })
+
+
+        if(formisValid) {
+            if (this.state.formType === 'Edit Match') {
+                db.ref(`matches/${this.state.matchId}`)
+                .update(dataToSubmit).then(()=> {
+                    this.successForm('Updated correctly');
+                }).catch((err) => {
+                    this.setState({
+                        formError: true
+                    })
+                })
+            }
+        } else {
+            this.setState({
+                formError: true
+            })
+        }
+    }
 
     render () {
         return (
