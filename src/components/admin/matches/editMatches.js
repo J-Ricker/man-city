@@ -4,6 +4,9 @@ import AdminLayout from '../../../HOC/adminLayout';
 import FormField from '../../ui/formFields';
 import {validate} from '../../ui/misc';
 
+import {firebaseTeams, db, firebaseMatches} from '../../../firebase';
+import {firebaseLooper} from '../../ui/misc';
+
 class AddEditMatch extends Component {
 
     state = {
@@ -162,6 +165,83 @@ class AddEditMatch extends Component {
             }
         }
     }
+
+    updateForm(element){
+        const newFormData = {
+            ...this.state.formData
+        }
+        const newElement = {
+            ...newFormData[element.id]
+        }
+
+        newElement.value = element.e.target.value;
+
+        let validData = validate(newElement)
+
+        newElement.valid = validData[0];
+        newElement.validationMessage = validData[1];
+
+        newFormData[element.id] = newElement;
+
+
+        this.setState({
+            formError: false,
+            formData: newFormData
+        })
+    }
+
+    updateFields(match, teamOptions, teams, type, matchId) {
+        const newFormData = {
+            ...this.state.formData
+        }
+
+        for(let key in newFormData) {
+            if (match) {
+                newFormData[key].value = match[key];
+                newFormData[key].valid = true;
+            }
+            if(key === 'local' || key === 'away') {
+                newFormData[key].config.options =teamOptions
+            }
+        }
+
+        this.setState({
+            matchId,
+            formType:type,
+            formData: newFormData,
+            teams
+        })
+
+    }
+
+    componentDidMount() {
+        const matchId = this.props.match.params.id;
+        const getTeams = (match, type) => {
+            firebaseTeams.once('value').then(snapshot => {
+                const teams = firebaseLooper(snapshot);
+                const teamOptions = [];
+
+                snapshot.forEach((childSnapshot) => {
+                    teamOptions.push({
+                        key: childSnapshot.val().shortName,
+                        value: childSnapshot.val().shortName
+                    })
+                });
+                this.updateFields(match, teamOptions, teams, type, matchId)
+            })
+        }
+        
+        if(!matchId) {
+            /// ADD MATCH
+        } else {
+            /// fetch data from match id
+            db.ref(`matches/${matchId}`).once('value').then((snapshot) => {
+                const match = snapshot.val();
+                getTeams(match, 'Edit Match');
+            })
+        }
+    }
+
 
     render () {
         return (
