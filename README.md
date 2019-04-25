@@ -14,7 +14,7 @@ https://man-city-76299.firebaseapp.com (This is the full site)
 
 https://man-city-76299.firebaseapp.com/sign-in (this is the way to the admin section!)
 
-Username: text1@gmail.com
+Username: test1@gmail.com
 Password: password123
 
 (there is no private information on the database or the site so providing the info doesnt do anything but give you a better experience!)
