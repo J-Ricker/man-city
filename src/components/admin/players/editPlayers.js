@@ -4,7 +4,7 @@ import AdminLayout from '../../../HOC/adminLayout';
 import FormField from '../../ui/formFields';
 import {validate} from '../../ui/misc';
 
-import FileUploader from '../../ui/fileUploader';
+import Fileuploader from '../../ui/fileuploader';
 import {firebasePlayers, db, firebase} from '../../../firebase';
 
 class EditPlayers extends Component {
@@ -156,7 +156,7 @@ class EditPlayers extends Component {
     }
 
     storeFilename = () => {
-        
+
     }
 
     render() {
@@ -169,7 +169,7 @@ class EditPlayers extends Component {
                     <div>
                         <form onSubmit={(e) => this.submitForm(e)}>
 
-                            <FileUploader 
+                            <Fileuploader 
                                 dir="players"
                                 tag={"Player image"}
                                 defaultImg={this.state.defaultImg}
