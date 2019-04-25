@@ -93,6 +93,22 @@ class EditPlayers extends Component {
         }
     }
 
+    updateFields = (player, playerId, formType, defaultImg) => {
+        const newFormData = {...this.state.formData}
+
+        for (let key in newFormData) {
+            newFormData[key].value = player[key];
+            newFormData[key].valid = true
+        }
+
+        this.setState({
+            playerId,
+            defaultImg,
+            formType,
+            formData: newFormData
+        })
+    }
+
     componentDidMount() {
         const playerId = this.props.match.params.id;
 
@@ -103,6 +119,17 @@ class EditPlayers extends Component {
                 })
         } else {
             //edit player
+            db.ref(`players/${playerId}`).once('value').then(snaphsot => {
+                const playerData = snaphsot.val();
+
+                firebase.storage().ref('players').child(playerData.image)
+                .getDownloadURL()
+                .then(url => {
+                    this.updateFields(playerData, playerId, 'Edit player', url)
+                }).catch(err => {
+                    this.updateFields({...playerData, image: ''}, playerId, 'Edit player', '')
+                })
+            })
         }
     }
 
@@ -134,6 +161,17 @@ class EditPlayers extends Component {
         })
     }
 
+    successForm = (message) => {
+        this.setState({
+            formSuccess: message
+        });
+        setTimeout(() => {
+            this.setState({
+                formSuccess: ''
+            })
+        }, 2000 )
+    }
+
     submitForm(e){
         e.preventDefault();
 
@@ -148,7 +186,14 @@ class EditPlayers extends Component {
 
         if(formisValid) {
             if (this.state.formType === 'Edit player') {
-
+                db.ref(`players/${this.state.playerId}`)
+                .update(dataToSubmit).then(() => {
+                    this.successForm('Update correctly')
+                }).catch(err => {
+                    this.setState({
+                        formError: true
+                    })
+                })
             } else {
                 firebasePlayers.push(dataToSubmit).then(() => {
                     this.props.history.push('/admin_players')
