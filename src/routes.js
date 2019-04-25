@@ -9,6 +9,7 @@ import Home from './components/home';
 import SignIn from './components/signIn';
 import TheTeam from './components/theTeam';
 import TheMatches from './components/theMatches';
+import NotFound from './components/ui/notFound';
 
 import Dashboard from './components/admin/dashboard';
 import AdminMatches from './components/admin/matches';
